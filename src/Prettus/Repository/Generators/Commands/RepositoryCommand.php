@@ -92,7 +92,7 @@ class RepositoryCommand extends Command
         $this->generators->push($baseModelGenerator);
 
         $baseTransformerGenerator = new BaseTransformerGenerator([
-            'name' => 'Base',
+            'name' => 'BaseTransformer',
             'force' => $this->option('force'),
             'skip' => true
         ]);

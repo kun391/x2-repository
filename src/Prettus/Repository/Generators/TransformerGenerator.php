@@ -80,7 +80,7 @@ class TransformerGenerator extends Generator
     public function getBaseClass()
     {
         $baseTransformerGenerator = new BaseTransformerGenerator([
-            'name'  => 'Base',
+            'name'  => 'BaseTransformer',
             'force' => $this->force,
         ]);
 
