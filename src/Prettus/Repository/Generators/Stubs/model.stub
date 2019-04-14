@@ -2,19 +2,13 @@
 
 $NAMESPACE$
 
-use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
-
 /**
  * Class $CLASS$.
  *
  * @package $NAMESPACE$
  */
-class $CLASS$ extends Model implements Transformable
+class $CLASS$ extends $BASE$
 {
-    use TransformableTrait;
-
     /**
      * The attributes that are mass assignable.
      *

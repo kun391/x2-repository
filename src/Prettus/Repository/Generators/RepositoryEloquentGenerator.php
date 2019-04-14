@@ -73,8 +73,7 @@ class RepositoryEloquentGenerator extends Generator
 
         return array_merge(parent::getReplacements(), [
             'fillable'      => $this->getFillable(),
-            'use_validator' => $this->getValidatorUse(),
-            'validator'     => $this->getValidatorMethod(),
+            'use_presenter' => $this->getPresenterUse(),
             'repository'    => $repository,
             'model'         => isset($this->options['model']) ? $this->options['model'] : ''
         ]);
@@ -109,41 +108,26 @@ class RepositoryEloquentGenerator extends Generator
         return new SchemaParser($this->fillable);
     }
 
-    public function getValidatorUse()
+    public function getPresenterUse()
     {
-        $validator = $this->getValidator();
+        $presenter = $this->getPresenter();
 
-        return "use {$validator};";
+        return "use {$presenter};";
     }
 
-
-    public function getValidator()
+    public function getPresenter()
     {
-        $validatorGenerator = new ValidatorGenerator([
+        $presentorGenerator = new PresenterGenerator([
             'name'  => $this->name,
-            'rules' => $this->rules,
             'force' => $this->force,
         ]);
 
-        $validator = $validatorGenerator->getRootNamespace() . '\\' . $validatorGenerator->getName();
+        $presenter = $presentorGenerator->getRootNamespace() . '\\' . $presentorGenerator->getName();
 
         return str_replace([
             "\\",
             '/'
-        ], '\\', $validator) . 'Validator';
-
-    }
-
-
-    public function getValidatorMethod()
-    {
-        if ($this->validator != 'yes') {
-            return '';
-        }
-
-        $class = $this->getClass();
-
-        return '/**' . PHP_EOL . '    * Specify Validator class name' . PHP_EOL . '    *' . PHP_EOL . '    * @return mixed' . PHP_EOL . '    */' . PHP_EOL . '    public function validator()' . PHP_EOL . '    {' . PHP_EOL . PHP_EOL . '        return ' . $class . 'Validator::class;' . PHP_EOL . '    }' . PHP_EOL;
+        ], '\\', $presenter) . 'Presenter';
 
     }
 }

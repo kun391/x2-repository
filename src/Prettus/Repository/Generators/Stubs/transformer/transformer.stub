@@ -2,7 +2,6 @@
 
 $NAMESPACE$
 
-use League\Fractal\TransformerAbstract;
 use $MODEL$;
 
 /**
@@ -10,24 +9,24 @@ use $MODEL$;
  *
  * @package $NAMESPACE$
  */
-class $CLASS$Transformer extends TransformerAbstract
+class $CLASS$Transformer extends $BASE$
 {
     /**
-     * Transform the $CLASS$ entity.
-     *
-     * @param \$MODEL$ $model
-     *
-     * @return array
+     * Array attribute doesn't parse.
      */
-    public function transform($CLASS$ $model)
-    {
-        return [
-            'id'         => (int) $model->id,
+    public $ignoreAttributes = [];
 
-            /* place your other model properties here */
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [];
 
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
-        ];
-    }
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [];
 }

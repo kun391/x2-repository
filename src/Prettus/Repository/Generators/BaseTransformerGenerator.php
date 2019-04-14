@@ -1,20 +1,23 @@
 <?php
+
 namespace Prettus\Repository\Generators;
 
+use Prettus\Repository\Generators\Migrations\SchemaParser;
+
 /**
- * Class TransformerGenerator
+ * Class ModelGenerator
  * @package Prettus\Repository\Generators
- * @author Anderson Andrade <contato@andersonandra.de>
+ * @author Kun <nguyentruongthanh.dn@gmail.com>
  */
-class TransformerGenerator extends Generator
+class BaseTransformerGenerator extends Generator
 {
+
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'transformer/transformer';
-
+    protected $stub = 'transformer/base';
     /**
      * Get root namespace.
      *
@@ -50,40 +53,9 @@ class TransformerGenerator extends Generator
      *
      * @return string
      */
+
     public function getBasePath()
     {
         return config('repository.generator.basePath', app()->path());
-    }
-
-    /**
-     * Get array replacements.
-     *
-     * @return array
-     */
-    public function getReplacements()
-    {
-        $modelGenerator = new ModelGenerator([
-            'name' => $this->name
-        ]);
-        $model = $modelGenerator->getRootNamespace() . '\\' . $modelGenerator->getName();
-        $model = str_replace([
-            "\\",
-            '/'
-        ], '\\', $model);
-
-        return array_merge(parent::getReplacements(), [
-            'model' => $model,
-            'base' => $this->getBaseClass()
-        ]);
-    }
-
-    public function getBaseClass()
-    {
-        $baseTransformerGenerator = new BaseTransformerGenerator([
-            'name'  => 'Base',
-            'force' => $this->force,
-        ]);
-
-        return $baseTransformerGenerator->getRootNamespace() . '\\' . $baseTransformerGenerator->getName();
     }
 }

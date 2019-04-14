@@ -5,8 +5,8 @@ $NAMESPACE$
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use $REPOSITORY$
+$USE_PRESENTER$
 use $MODEL$;
-$USE_VALIDATOR$
 
 /**
  * Class $CLASS$RepositoryEloquent.
@@ -25,7 +25,15 @@ class $CLASS$RepositoryEloquent extends BaseRepository implements $CLASS$Reposit
         return $CLASS$::class;
     }
 
-    $VALIDATOR$
+    /**
+     * Specify Presenter class name
+     *
+     * @return string
+     */
+    public function presenter()
+    {
+        return $CLASS$Presenter::class;
+    }
 
     /**
      * Boot up the repository, pushing criteria

@@ -68,7 +68,8 @@ class ModelGenerator extends Generator
     public function getReplacements()
     {
         return array_merge(parent::getReplacements(), [
-            'fillable' => $this->getFillable()
+            'fillable' => $this->getFillable(),
+            'base' => $this->getBaseClass()
         ]);
     }
 
@@ -99,5 +100,15 @@ class ModelGenerator extends Generator
     public function getSchemaParser()
     {
         return new SchemaParser($this->fillable);
+    }
+
+    public function getBaseClass()
+    {
+        $baseModelGenerator = new BaseModelGenerator([
+            'name'  => 'BaseModel',
+            'force' => $this->force,
+        ]);
+
+        return $baseModelGenerator->getRootNamespace() . '\\' . $baseModelGenerator->getName();
     }
 }

@@ -34,7 +34,6 @@ abstract class Generator
      */
     protected $stub;
 
-
     /**
      * Create new instance of this class.
      *
@@ -255,7 +254,7 @@ abstract class Generator
         $segments = $this->getSegments();
         array_pop($segments);
         $rootNamespace = $this->getRootNamespace();
-        if ($rootNamespace == false) {
+        if ($rootNamespace === false) {
             return null;
         }
 
@@ -283,7 +282,10 @@ abstract class Generator
     public function run()
     {
         $this->setUp();
-        if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
+        if ($this->filesystem->exists($path = $this->getPath()) && (!$this->force || $this->skip)) {
+            if ($this->skip) {
+                return "{$path} already exists and we skipped it.";
+            }
             throw new FileAlreadyExistsException($path);
         }
         if (!$this->filesystem->isDirectory($dir = dirname($path))) {

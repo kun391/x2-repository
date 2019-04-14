@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 use Prettus\Repository\Generators\FileAlreadyExistsException;
 use Prettus\Repository\Generators\MigrationGenerator;
 use Prettus\Repository\Generators\ModelGenerator;
+use Prettus\Repository\Generators\BaseModelGenerator;
+use Prettus\Repository\Generators\BaseTransformerGenerator;
 use Prettus\Repository\Generators\RepositoryEloquentGenerator;
 use Prettus\Repository\Generators\RepositoryInterfaceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
@@ -81,6 +83,22 @@ class RepositoryCommand extends Command
             'force'    => $this->option('force')
         ]);
 
+        $baseModelGenerator = new BaseModelGenerator([
+            'name' => 'BaseModel',
+            'force' => $this->option('force'),
+            'skip' => true
+        ]);
+
+        $this->generators->push($baseModelGenerator);
+
+        $baseTransformerGenerator = new BaseTransformerGenerator([
+            'name' => 'Base',
+            'force' => $this->option('force'),
+            'skip' => true
+        ]);
+
+        $this->generators->push($baseTransformerGenerator);
+
         if (!$this->option('skip-model')) {
             $this->generators->push($modelGenerator);
         }
@@ -90,10 +108,17 @@ class RepositoryCommand extends Command
             'force' => $this->option('force'),
         ]));
 
-        foreach ($this->generators as $generator) {
-            $generator->run();
+        try {
+            foreach ($this->generators as $generator) {
+                $message = $generator->run();
+                if (is_string($message)) {
+                    $this->info($message);
+                }
+            }
+        } catch (FileAlreadyExistsException $e) {
+            $this->error($generator->getPath() . ' already exists!');
         }
-
+        
         $model = $modelGenerator->getRootNamespace() . '\\' . $modelGenerator->getName();
         $model = str_replace([
             "\\",
@@ -104,7 +129,6 @@ class RepositoryCommand extends Command
             (new RepositoryEloquentGenerator([
                 'name'      => $this->argument('name'),
                 'rules'     => $this->option('rules'),
-                'validator' => $this->option('validator'),
                 'force'     => $this->option('force'),
                 'model'     => $model
             ]))->run();

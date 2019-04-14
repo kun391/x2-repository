@@ -1,11 +1,11 @@
 <?php
-namespace Prettus\Repository\Contracts;
+namespace Kun\Repository\Contracts;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 /**
  * Interface CacheableInterface
- * @package Prettus\Repository\Contracts
+ * @package Kun\Repository\Contracts
  * @author Anderson Andrade <contato@andersonandra.de>
  */
 interface CacheableInterface
