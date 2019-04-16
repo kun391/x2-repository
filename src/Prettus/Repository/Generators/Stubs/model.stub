@@ -7,7 +7,7 @@ $NAMESPACE$
  *
  * @package $NAMESPACE$
  */
-class $CLASS$ extends $BASE$
+class $CLASS$ extends \$BASE$
 {
     /**
      * The attributes that are mass assignable.

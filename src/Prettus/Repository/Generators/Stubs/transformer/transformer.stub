@@ -9,7 +9,7 @@ use $MODEL$;
  *
  * @package $NAMESPACE$
  */
-class $CLASS$Transformer extends $BASE$
+class $CLASS$Transformer extends \$BASE$
 {
     /**
      * Array attribute doesn't parse.
